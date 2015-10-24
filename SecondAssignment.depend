@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1445627842 source:/home/meysamabl/Desktop/SecondAssignment/main.cpp
+	<iostream>
+	<vector>
+	"Node.h"
+	"DijkastraAlgorithm.h"
+
+1445621276 source:/home/meysamabl/Desktop/SecondAssignment/src/Node.cpp
+	"Node.h"
+
+1445625166 /home/meysamabl/Desktop/SecondAssignment/include/Node.h
+	<map>
+
+1445627812 source:/home/meysamabl/Desktop/SecondAssignment/src/DijkastraAlgorithm.cpp
+	"DijkastraAlgorithm.h"
+
+1445627799 /home/meysamabl/Desktop/SecondAssignment/include/DijkastraAlgorithm.h
+	<map>
+	<vector>
+	<set>
+	<queue>
+	"Node.h"
+	<iostream>
+
