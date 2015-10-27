@@ -2,10 +2,79 @@
 #include <vector>
 
 #include "Node.h"
+#include "Triangle.h"
 #include "DijkastraAlgorithm.h"
 
 using namespace std;
 
+int main ()
+{
+    double x0,y0,z0;
+    Triangle* triPtr = nullptr;
+    Location* locPtr = nullptr;
+    vector<Location> vertices;
+    list<Triangle> mountain;
+
+    cout << "Please enter initial location(x0,y0,z0) within the range [0,100]: ";
+    cin >> x0;
+    cin >> y0;
+    cin >> z0;
+    cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
+
+    ///creating the pyramid ---------------
+    /* ------ trianle 0 ------- */
+    locPtr = new Location(0.0, 0.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(100.0, 0.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(x0,y0,z0);
+    vertices.push_back(*locPtr);
+    triPtr = new Triangle(vertices, "triangle#0");
+    mountain.push_back(*triPtr);
+    vertices.clear();
+    /* ------ trianle 1 ------- */
+    locPtr = new Location(0.0, 0.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(0.0, 100.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(x0,y0,z0);
+    vertices.push_back(*locPtr);
+    triPtr = new Triangle(vertices, "triangle#1");
+    mountain.push_back(*triPtr);
+    vertices.clear();
+    /* ------ trianle 2 ------- */
+    locPtr = new Location(0.0, 100.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(100.0, 100.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(x0,y0,z0);
+    vertices.push_back(*locPtr);
+    triPtr = new Triangle(vertices, "triangle#2");
+    mountain.push_back(*triPtr);
+    vertices.clear();
+    /* ------ trianle 3 ------- */
+    locPtr = new Location(100.0, 100.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(100.0, 0.0, 0.0);
+    vertices.push_back(*locPtr);
+    locPtr = new Location(x0,y0,z0);
+    vertices.push_back(*locPtr);
+    triPtr = new Triangle(vertices, "triangle#3");
+    mountain.push_back(*triPtr);
+    vertices.clear();
+
+    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
+    {   cout << "Name: " << it->Getid() << endl;
+        for(unsigned i = 0; i < it->Getvertices().size(); ++i)
+        {
+            cout << "(" << it->Getvertices()[i].Getx() <<
+                    ", " << it->Getvertices()[i].Gety() <<
+                    ", " << it->Getvertices()[i].Getz() << ")" << endl;
+        }
+    }
+    return 0;
+}
+/*
 int main()
 {
     vector<Node> myNetwork;
@@ -70,3 +139,4 @@ int main()
     }
     return 0;
 }
+*/

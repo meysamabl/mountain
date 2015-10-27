@@ -35,10 +35,14 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/DijkastraAlgorithm.h" />
+		<Unit filename="include/Location.h" />
 		<Unit filename="include/Node.h" />
+		<Unit filename="include/Triangle.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/DijkastraAlgorithm.cpp" />
+		<Unit filename="src/Location.cpp" />
 		<Unit filename="src/Node.cpp" />
+		<Unit filename="src/Triangle.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
