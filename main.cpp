@@ -69,7 +69,7 @@ int main ()
         {
             cout << "(" << it->Getvertices()[i].Getx() <<
                     ", " << it->Getvertices()[i].Gety() <<
-                    ", " << it->Getvertices()[i].Getz() << ")" << endl;
+                    ", " << it->Getvertices()[i].Getz() << ") " << endl;
         }
     }
     return 0;

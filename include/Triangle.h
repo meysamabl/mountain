@@ -23,11 +23,14 @@ class Triangle
             if(this == &rhs) { return true;}
             else { return false;}
         }
+
         bool operator!= (const Triangle& rhs)
         {
             if(this != &rhs) { return true;}
             else { return false;}
         }
+
+        bool isNeighbor(const Triangle& triangle);
         /** Access ID
         * \return value of id
         */
