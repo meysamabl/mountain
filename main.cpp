@@ -1,11 +1,15 @@
 #include <iostream>
 #include <vector>
+#include <random>
 
 #include "Node.h"
 #include "Triangle.h"
 #include "DijkastraAlgorithm.h"
 
 using namespace std;
+
+default_random_engine gen;
+uniform_real_distribution<double> distr;
 
 int main ()
 {
@@ -84,6 +88,7 @@ int main ()
                     ", " << it->Getvertices()[i].Getz() << ") " << endl;
         }
     }
+    /*
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {   list<Triangle*> temp = it->Getneighbors();
      cout << "Name: " << it->Getid() << endl;
@@ -91,6 +96,18 @@ int main ()
         {
             cout << "Point: " << (*itr)->Getid() << endl;
         }
+    }*/
+    int iterationNumber = 0;
+    list<Triangle>::iterator it = mountain.begin();
+
+    while(iterationNumber <=100)
+    {
+        while(it != mountain.end())
+        {
+            it->getRandomCentroid();
+            it++;
+        }
+        iterationNumber++;
     }
     return 0;
 }

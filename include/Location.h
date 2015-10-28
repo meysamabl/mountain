@@ -19,7 +19,7 @@ class Location
         /** Access x
          * \return The current value of x
          */
-        double Getx() { return x; }
+        double Getx() const { return x; }
         /** Set x
          * \param val New value to set
          */
@@ -27,7 +27,7 @@ class Location
         /** Access y
          * \return The current value of y
          */
-        double Gety() { return y; }
+        double Gety() const { return y; }
         /** Set y
          * \param val New value to set
          */
@@ -35,7 +35,7 @@ class Location
         /** Access z
          * \return The current value of z
          */
-        double Getz() { return z; }
+        double Getz() const { return z; }
         /** Set z
          * \param val New value to set
          */

@@ -5,6 +5,9 @@
 #include <list>
 #include <vector>
 #include <string>
+#include <iostream>
+#include <math.h>
+#include <random>
 
 using namespace std;
 
@@ -33,6 +36,12 @@ class Triangle
         bool isNeighbor(vector<Location> verts);
 
         void addNeighor(Triangle& neighbor);
+
+        Location findCentroid();
+
+        Location getRandomCentroid();
+
+        double getShortestSide();
         /** Access ID
         * \return value of id
         */
@@ -64,6 +73,8 @@ class Triangle
         string id;
         vector<Location> vertices; //!< Member variable "vertices"
         list<Triangle*> neighbors; //!< Member variable "neighbors"
+        const vector<double> getDeltaValues(const Location& loc1, const Location& loc2);
+        double calculateDistance(const vector<double> deltaValues);
 };
 
 #endif // TRIANGLE_H
