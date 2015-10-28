@@ -62,7 +62,19 @@ int main ()
     triPtr = new Triangle(vertices, "triangle#3");
     mountain.push_back(*triPtr);
     vertices.clear();
-
+    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
+    {
+        for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end(); ++itr)
+        {
+            if((*it) != (*itr))
+            {
+                if((*it).isNeighbor((*itr).Getvertices()))
+                {
+                    (*it).addNeighor(*itr);
+                }
+            }
+        }
+    }
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {   cout << "Name: " << it->Getid() << endl;
         for(unsigned i = 0; i < it->Getvertices().size(); ++i)
@@ -70,6 +82,14 @@ int main ()
             cout << "(" << it->Getvertices()[i].Getx() <<
                     ", " << it->Getvertices()[i].Gety() <<
                     ", " << it->Getvertices()[i].Getz() << ") " << endl;
+        }
+    }
+    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
+    {   list<Triangle*> temp = it->Getneighbors();
+     cout << "Name: " << it->Getid() << endl;
+        for(list<Triangle*>::iterator itr = temp.begin(); itr != temp.end(); ++itr)
+        {
+            cout << "Point: " << (*itr)->Getid() << endl;
         }
     }
     return 0;

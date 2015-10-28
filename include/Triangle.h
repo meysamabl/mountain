@@ -30,7 +30,9 @@ class Triangle
             else { return false;}
         }
 
-        bool isNeighbor(const Triangle& triangle);
+        bool isNeighbor(vector<Location> verts);
+
+        void addNeighor(Triangle& neighbor);
         /** Access ID
         * \return value of id
         */
