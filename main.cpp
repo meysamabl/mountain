@@ -14,50 +14,50 @@ uniform_real_distribution<double> distr;
 list<Triangle> initialTriangles(double x0, double y0, double z0)
 {
     Triangle* tptr = nullptr;
-    vector<Edge> edges;
+    vector<Point> vertices;
     list<Triangle> tris;
-    Edge* eptr = nullptr;
+    Point* pptr = nullptr;
 
     ///first trianlge
-    eptr = new Edge(x0,y0,z0, 0, 0, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(x0,y0,z0, 100, 0, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(0, 0, 0, 100, 0, 0);
-    edges.push_back(*eptr);
-    tptr = new Triangle(edges);
+    pptr = new Point(x0,y0,z0);
+    vertices.push_back(*pptr);
+    pptr = new Point(100, 0, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(0, 0, 0);
+    vertices.push_back(*pptr);
+    tptr = new Triangle(vertices);
     tris.push_back(*tptr);
-    edges.clear();
+    vertices.clear();
     /// second triangle
-    eptr = new Edge(x0,y0,z0, 0, 0, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(x0,y0,z0, 0, 100, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(0, 0, 0, 0, 100, 0);
-    edges.push_back(*eptr);
-    tptr = new Triangle(edges);
+    pptr = new Point(x0,y0,z0);
+    vertices.push_back(*pptr);
+    pptr = new Point(0, 100, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(0, 0, 0);
+    vertices.push_back(*pptr);
+    tptr = new Triangle(vertices);
     tris.push_back(*tptr);
-    edges.clear();
+    vertices.clear();
     /// third triangle
-    eptr = new Edge(x0,y0,z0, 0, 100, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(x0,y0,z0, 100, 100, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(0, 100, 0, 100, 100, 0);
-    edges.push_back(*eptr);
-    tptr = new Triangle(edges);
+    pptr = new Point(x0,y0,z0);
+    vertices.push_back(*pptr);
+    pptr = new Point(0, 100, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(100,100, 0);
+    vertices.push_back(*pptr);
+    tptr = new Triangle(vertices);
     tris.push_back(*tptr);
-    edges.clear();
+    vertices.clear();
     /// forth triangle
-    eptr = new Edge(x0,y0,z0, 0, 0, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(x0,y0,z0, 100, 0, 0);
-    edges.push_back(*eptr);
-    eptr = new Edge(0, 0, 0, 100, 0, 0);
-    edges.push_back(*eptr);
-    tptr = new Triangle(edges);
+    pptr = new Point(x0,y0,z0);
+    vertices.push_back(*pptr);
+    pptr = new Point(100, 100, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(100,0, 0);
+    vertices.push_back(*pptr);
+    tptr = new Triangle(vertices);
     tris.push_back(*tptr);
-     edges.clear();
+    vertices.clear();
     return tris;
 }
 
@@ -65,25 +65,35 @@ int main ()
 {
     double x0,y0,z0;
     list<Triangle> mountain;
-
+    gen.seed(time(NULL));
     cout << "Please enter initial location(x0,y0,z0) within the range [0,100]: ";
     cin >> x0;
     cin >> y0;
     cin >> z0;
     cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
-    list<Triangle> doodooltala = initialTriangles(x0,y0,z0);
-    mountain.merge(doodooltala);
+    mountain.merge(initialTriangles(x0,y0,z0));
     int edgeNum = 1;
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {
-        cout << it->getId() << endl;
-        for(unsigned i = 0; i < it->getEdges().size(); ++i)
+        for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end(); ++itr)
         {
-            cout << "Edge " << edgeNum << endl;
-            it->getEdges()[i].displayEdge();
+            if((*it)!=(*itr))
+            {
+                it->addIfNeighbor(&(*itr));
+            }
+        }
+    }
+    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
+    {
+        cout << it->getId() << endl;
+        it->getDeviatedCentroid();
+        for(unsigned i = 0; i < it->getNeighbors().size(); ++i)
+        {
+            cout << it->getNeighbors()[i]->getId() << ", ";
             edgeNum++;
         }
-        cout << endl;
+
+        cout << endl << endl;
         edgeNum = 1;
     }
     return 0;

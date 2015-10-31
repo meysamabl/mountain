@@ -25,6 +25,11 @@ class Edge
         {
             return this->points[0] == rhs.points[0] && this->points[1] == rhs.points[1];
         }
+
+        bool operator<= (const Edge& rhs)
+        {
+            return sideLength <= rhs.sideLength;
+        }
         /** Access points
          * \return The current value of points
          */
@@ -45,7 +50,7 @@ class Edge
         void displayEdge() { cout << "\tPoint 1: (" << points[0].getX() << ", " << points[0].getY() <<
                                 ", " << points[0].getZ() << ")" <<
                                 "\n\tPoint 2: (" << points[1].getX() << ", " << points[1].getY() <<
-                                ", " << points[1].getZ() << ")" << endl; }
+                                ", " << points[1].getZ() << ")\nLength: " << sideLength << endl; }
     protected:
     private:
         vector<Point> points; //!< Member variable "points"

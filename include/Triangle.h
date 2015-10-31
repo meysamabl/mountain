@@ -18,7 +18,7 @@ class Triangle
         /** Default constructor */
         Triangle();
 
-        Triangle(vector<Edge> edgeValues);
+        Triangle(vector<Point> verticesVal);
         /** Default destructor */
         virtual ~Triangle();
 
@@ -41,7 +41,9 @@ class Triangle
 
         bool addIfNeighbor(Triangle* neighbor);
 
-        Point findCentroid();
+        Point getDeviatedCentroid();
+
+        list<Triangle> refineMe();
 
         string getId() const { return id; }
 
@@ -61,8 +63,11 @@ class Triangle
         string id;
         vector<Triangle*> neighbors;
         vector<Edge> edges;
+        vector<Point> vertices;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
+        Edge& getShortestSide();
+        Point findCentroid();
 };
 
 #endif // TRIANGLE_H
