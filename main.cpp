@@ -58,6 +58,16 @@ list<Triangle> initialTriangles(double x0, double y0, double z0)
     tptr = new Triangle(vertices);
     tris.push_back(*tptr);
     vertices.clear();
+    for(list<Triangle>::iterator it = tris.begin(); it != tris.end(); ++it)
+    {
+        for(list<Triangle>::iterator itr = tris.begin(); itr != tris.end(); ++itr)
+        {
+            if((*it)!=(*itr))
+            {
+                it->addIfNeighbor(&(*itr));
+            }
+        }
+    }
     return tris;
 }
 
@@ -72,34 +82,22 @@ int main ()
     cin >> z0;
     cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
     mountain.merge(initialTriangles(x0,y0,z0));
-    int edgeNum = 1;
-    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
-    {
-        for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end(); ++itr)
-        {
-            if((*it)!=(*itr))
-            {
-                it->addIfNeighbor(&(*itr));
-            }
-        }
-    }
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {
         cout << it->getId() << endl;
-        list<Triangle> doodooltala = it->refineMe();
-        for(list<Triangle>::iterator itr = doodooltala.begin(); itr != doodooltala.end(); ++itr)
-        {
-            cout << "****** " << itr->getId() << endl;
-        }
-        /*
+
         for(unsigned i = 0; i < it->getNeighbors().size(); ++i)
         {
             cout << it->getNeighbors()[i]->getId() << ", ";
-            edgeNum++;
-        } */
-
+        }
+        list<Triangle> doodooltala = it->refineMe();
+        //mountain.erase(it);
+        mountain.merge(doodooltala);
         cout << endl << endl;
-        edgeNum = 1;
+        if(mountain.size() > 100)
+        {
+            break;
+        }
     }
     return 0;
 }

@@ -45,6 +45,10 @@ bool Triangle::isNeighbor(const Triangle& triangle)
 
 void Triangle::addNeighbor(Triangle* neighbor)
 {
+    if(neighbors.size() > 3)
+    {
+        throw new exception();
+    }
     neighbors.push_back(neighbor);
 }
 
@@ -71,7 +75,6 @@ Point Triangle::getDeviatedCentroid()
     double alpha = getShortestSide().getSideLength();
     distr.param(uniform_real_distribution<double>(0, alpha).param());
     alpha = distr(gen)/20;
-    cout << "Alpha: " << alpha << endl;
     point.setX(point.getX() + alpha);
     point.setY(point.getY() + alpha);
     point.setZ(point.getZ() + alpha);
@@ -93,28 +96,49 @@ list<Triangle> Triangle::refineMe()
     list<Triangle> triangles;
     vector<Point> points;
     Triangle* tptr = nullptr;
+    Point center = getDeviatedCentroid();
     /// first triangle
-    points.push_back(getDeviatedCentroid());
+    points.push_back(center);
     points.push_back(vertices[0]);
     points.push_back(vertices[2]);
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
     /// second triangle
-    points.push_back(getDeviatedCentroid());
+    points.push_back(center);
     points.push_back(vertices[0]);
     points.push_back(vertices[1]);
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
     /// third triangle
-    points.push_back(getDeviatedCentroid());
+    points.push_back(center);
     points.push_back(vertices[1]);
     points.push_back(vertices[2]);
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
     tptr = nullptr;
+    for(list<Triangle>::iterator it = triangles.begin(); it != triangles.end();++it)
+    {
+        for(list<Triangle>::iterator itr = triangles.begin(); itr != triangles.end();++itr)
+        {
+            if((*it) != (*itr))
+            {
+                if(it->addIfNeighbor(&(*itr)))
+                {
+                    cout << "\n---------" << it->getId() << "neighbors--------------: " << itr->getId() << ", ";
+                }
+            }
+        }
+        for(unsigned i = 0; i < neighbors.size(); ++i)
+        {
+            if(it->addIfNeighbor(neighbors[i]))
+            {
+                cout << "\n" << it->getId() << "**: " << neighbors[i]->getId() << ", ";
+            }
+        }
+    }
     return triangles;
 }
 

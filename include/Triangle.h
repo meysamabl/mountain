@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <random>
+#include <exception>
 
 using namespace std;
 
