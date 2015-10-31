@@ -1,12 +1,12 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include "Location.h"
+#include "Edge.h"
 #include <list>
 #include <vector>
 #include <string>
 #include <iostream>
-#include <math.h>
+#include <sstream>
 #include <random>
 
 using namespace std;
@@ -14,10 +14,11 @@ using namespace std;
 class Triangle
 {
     public:
+        static int idStat;
         /** Default constructor */
         Triangle();
 
-        Triangle(vector<Location> vertices, string id);
+        Triangle(vector<Edge> edgeValues);
         /** Default destructor */
         virtual ~Triangle();
 
@@ -27,54 +28,41 @@ class Triangle
             else { return false;}
         }
 
+        bool operator< (const Triangle& rhs)
+        {
+            return this->id < rhs.id;
+        }
+
         bool operator!= (const Triangle& rhs)
         {
             if(this != &rhs) { return true;}
             else { return false;}
         }
 
-        bool isNeighbor(vector<Location> verts);
+        bool addIfNeighbor(Triangle* neighbor);
 
-        void addNeighor(Triangle& neighbor);
+        Point findCentroid();
 
-        Location findCentroid();
+        string getId() const { return id; }
 
-        Location getRandomCentroid();
+        void setId(string val) { id = val; }
 
-        double getShortestSide();
-        /** Access ID
-        * \return value of id
-        */
-        string Getid() { return id; }
+        vector<Triangle*>& getNeighbors()  { return neighbors; }
 
-        /**
-        * \return void
-        */
-        void Setid(string val) { id = val; }
+        void setNeighbors(vector<Triangle*> val) { neighbors = val; }
 
-        /** Access vertices
-         * \return The current value of vertices
-         */
-        vector<Location> Getvertices() { return vertices; }
-        /** Set vertices
-         * \param val New value to set
-         */
-        void Setvertices(vector<Location> val) { vertices = val; }
-        /** Access neighbors
-         * \return The current value of neighbors
-         */
-        list<Triangle*> Getneighbors() { return neighbors; }
-        /** Set neighbors
-         * \param val New value to set
-         */
-        void Setneighbors(list<Triangle*> val) { neighbors = val; }
+        vector<Edge>& getEdges()  { return edges; }
+
+        void setEdges(vector<Edge> val) { edges = val; }
+
+
     protected:
     private:
         string id;
-        vector<Location> vertices; //!< Member variable "vertices"
-        list<Triangle*> neighbors; //!< Member variable "neighbors"
-        const vector<double> getDeltaValues(const Location& loc1, const Location& loc2);
-        double calculateDistance(const vector<double> deltaValues);
+        vector<Triangle*> neighbors;
+        vector<Edge> edges;
+        bool isNeighbor(const Triangle& triangle);
+        void addNeighbor(Triangle* neighbor);
 };
 
 #endif // TRIANGLE_H

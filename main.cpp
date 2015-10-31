@@ -11,12 +11,59 @@ using namespace std;
 default_random_engine gen;
 uniform_real_distribution<double> distr;
 
+list<Triangle> initialTriangles(double x0, double y0, double z0)
+{
+    Triangle* tptr = nullptr;
+    vector<Edge> edges;
+    list<Triangle> tris;
+    Edge* eptr = nullptr;
+
+    ///first trianlge
+    eptr = new Edge(x0,y0,z0, 0, 0, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(x0,y0,z0, 100, 0, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(0, 0, 0, 100, 0, 0);
+    edges.push_back(*eptr);
+    tptr = new Triangle(edges);
+    tris.push_back(*tptr);
+    edges.clear();
+    /// second triangle
+    eptr = new Edge(x0,y0,z0, 0, 0, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(x0,y0,z0, 0, 100, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(0, 0, 0, 0, 100, 0);
+    edges.push_back(*eptr);
+    tptr = new Triangle(edges);
+    tris.push_back(*tptr);
+    edges.clear();
+    /// third triangle
+    eptr = new Edge(x0,y0,z0, 0, 100, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(x0,y0,z0, 100, 100, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(0, 100, 0, 100, 100, 0);
+    edges.push_back(*eptr);
+    tptr = new Triangle(edges);
+    tris.push_back(*tptr);
+    edges.clear();
+    /// forth triangle
+    eptr = new Edge(x0,y0,z0, 0, 0, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(x0,y0,z0, 100, 0, 0);
+    edges.push_back(*eptr);
+    eptr = new Edge(0, 0, 0, 100, 0, 0);
+    edges.push_back(*eptr);
+    tptr = new Triangle(edges);
+    tris.push_back(*tptr);
+     edges.clear();
+    return tris;
+}
+
 int main ()
 {
     double x0,y0,z0;
-    Triangle* triPtr = nullptr;
-    Location* locPtr = nullptr;
-    vector<Location> vertices;
     list<Triangle> mountain;
 
     cout << "Please enter initial location(x0,y0,z0) within the range [0,100]: ";
@@ -24,90 +71,20 @@ int main ()
     cin >> y0;
     cin >> z0;
     cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
-
-    ///creating the pyramid ---------------
-    /* ------ trianle 0 ------- */
-    locPtr = new Location(0.0, 0.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(100.0, 0.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(x0,y0,z0);
-    vertices.push_back(*locPtr);
-    triPtr = new Triangle(vertices, "triangle#0");
-    mountain.push_back(*triPtr);
-    vertices.clear();
-    /* ------ trianle 1 ------- */
-    locPtr = new Location(0.0, 0.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(0.0, 100.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(x0,y0,z0);
-    vertices.push_back(*locPtr);
-    triPtr = new Triangle(vertices, "triangle#1");
-    mountain.push_back(*triPtr);
-    vertices.clear();
-    /* ------ trianle 2 ------- */
-    locPtr = new Location(0.0, 100.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(100.0, 100.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(x0,y0,z0);
-    vertices.push_back(*locPtr);
-    triPtr = new Triangle(vertices, "triangle#2");
-    mountain.push_back(*triPtr);
-    vertices.clear();
-    /* ------ trianle 3 ------- */
-    locPtr = new Location(100.0, 100.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(100.0, 0.0, 0.0);
-    vertices.push_back(*locPtr);
-    locPtr = new Location(x0,y0,z0);
-    vertices.push_back(*locPtr);
-    triPtr = new Triangle(vertices, "triangle#3");
-    mountain.push_back(*triPtr);
-    vertices.clear();
+    list<Triangle> doodooltala = initialTriangles(x0,y0,z0);
+    mountain.merge(doodooltala);
+    int edgeNum = 1;
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {
-        for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end(); ++itr)
+        cout << it->getId() << endl;
+        for(unsigned i = 0; i < it->getEdges().size(); ++i)
         {
-            if((*it) != (*itr))
-            {
-                if((*it).isNeighbor((*itr).Getvertices()))
-                {
-                    (*it).addNeighor(*itr);
-                }
-            }
+            cout << "Edge " << edgeNum << endl;
+            it->getEdges()[i].displayEdge();
+            edgeNum++;
         }
-    }
-    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
-    {   cout << "Name: " << it->Getid() << endl;
-        for(unsigned i = 0; i < it->Getvertices().size(); ++i)
-        {
-            cout << "(" << it->Getvertices()[i].Getx() <<
-                    ", " << it->Getvertices()[i].Gety() <<
-                    ", " << it->Getvertices()[i].Getz() << ") " << endl;
-        }
-    }
-    /*
-    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
-    {   list<Triangle*> temp = it->Getneighbors();
-     cout << "Name: " << it->Getid() << endl;
-        for(list<Triangle*>::iterator itr = temp.begin(); itr != temp.end(); ++itr)
-        {
-            cout << "Point: " << (*itr)->Getid() << endl;
-        }
-    }*/
-    int iterationNumber = 0;
-    list<Triangle>::iterator it = mountain.begin();
-
-    while(iterationNumber <=100)
-    {
-        while(it != mountain.end())
-        {
-            it->getRandomCentroid();
-            it++;
-        }
-        iterationNumber++;
+        cout << endl;
+        edgeNum = 1;
     }
     return 0;
 }

@@ -1,45 +1,45 @@
-#ifndef LOCATION_H
-#define LOCATION_H
+#ifndef POINT_H
+#define POINT_H
 
 
-class Location
+class Point
 {
     public:
         /** Default constructor */
-        Location();
+        Point();
 
-        Location(double xval, double yval, double zval);
+        Point(double xval, double yval, double zval);
         /** Default destructor */
-        virtual ~Location();
+        virtual ~Point();
 
-        bool operator== (const Location& rhs)
+        bool operator== (const Point& rhs)
         {
             return this->x == rhs.x && this->y == rhs.y && this->z == rhs.z;
         }
         /** Access x
          * \return The current value of x
          */
-        double Getx() const { return x; }
+        double getX() const { return x; }
         /** Set x
          * \param val New value to set
          */
-        void Setx(double val) { x = val; }
+        void setX(double val) { x = val; }
         /** Access y
          * \return The current value of y
          */
-        double Gety() const { return y; }
+        double getY() const { return y; }
         /** Set y
          * \param val New value to set
          */
-        void Sety(double val) { y = val; }
+        void setY(double val) { y = val; }
         /** Access z
          * \return The current value of z
          */
-        double Getz() const { return z; }
+        double getZ() const { return z; }
         /** Set z
          * \param val New value to set
          */
-        void Setz(double val) { z = val; }
+        void setZ(double val) { z = val; }
     protected:
     private:
         double x; //!< Member variable "x"
@@ -47,4 +47,4 @@ class Location
         double z; //!< Member variable "z"
 };
 
-#endif // LOCATION_H
+#endif // Point_H
