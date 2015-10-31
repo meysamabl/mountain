@@ -1,6 +1,9 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include<iostream>
+
+using namespace std;
 
 class Point
 {
@@ -40,6 +43,11 @@ class Point
          * \param val New value to set
          */
         void setZ(double val) { z = val; }
+
+        void displayPoint()
+        {
+            cout << "(" << x << ", " << y << ", " << z << ")" <<endl;
+        }
     protected:
     private:
         double x; //!< Member variable "x"

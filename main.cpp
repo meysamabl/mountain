@@ -86,12 +86,17 @@ int main ()
     for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
     {
         cout << it->getId() << endl;
-        it->getDeviatedCentroid();
+        list<Triangle> doodooltala = it->refineMe();
+        for(list<Triangle>::iterator itr = doodooltala.begin(); itr != doodooltala.end(); ++itr)
+        {
+            cout << "****** " << itr->getId() << endl;
+        }
+        /*
         for(unsigned i = 0; i < it->getNeighbors().size(); ++i)
         {
             cout << it->getNeighbors()[i]->getId() << ", ";
             edgeNum++;
-        }
+        } */
 
         cout << endl << endl;
         edgeNum = 1;

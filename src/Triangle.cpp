@@ -90,7 +90,32 @@ Point Triangle::findCentroid()
 
 list<Triangle> Triangle::refineMe()
 {
-
+    list<Triangle> triangles;
+    vector<Point> points;
+    Triangle* tptr = nullptr;
+    /// first triangle
+    points.push_back(getDeviatedCentroid());
+    points.push_back(vertices[0]);
+    points.push_back(vertices[2]);
+    tptr = new Triangle(points);
+    triangles.push_back(*tptr);
+    points.clear();
+    /// second triangle
+    points.push_back(getDeviatedCentroid());
+    points.push_back(vertices[0]);
+    points.push_back(vertices[1]);
+    tptr = new Triangle(points);
+    triangles.push_back(*tptr);
+    points.clear();
+    /// third triangle
+    points.push_back(getDeviatedCentroid());
+    points.push_back(vertices[1]);
+    points.push_back(vertices[2]);
+    tptr = new Triangle(points);
+    triangles.push_back(*tptr);
+    points.clear();
+    tptr = nullptr;
+    return triangles;
 }
 
 Triangle::~Triangle()
