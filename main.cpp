@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <random>
 
@@ -75,6 +76,7 @@ int main ()
 {
     double x0,y0,z0;
     list<Triangle> mountain;
+    fstream fout("test_output.dat", ios::out);
     gen.seed(time(NULL));
     cout << "Please enter initial location(x0,y0,z0) within the range [0,100]: ";
     cin >> x0;
@@ -82,22 +84,42 @@ int main ()
     cin >> z0;
     cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
     mountain.merge(initialTriangles(x0,y0,z0));
-    for(list<Triangle>::iterator it = mountain.begin(); it != mountain.end(); ++it)
+    list<Triangle>::iterator it = mountain.begin();
+    list<Triangle> refinedList;
+    while(mountain.size() < 20000)
     {
-        cout << it->getId() << endl;
+        if(it == mountain.end())
+        {
+            it = mountain.begin();
+        }
+        refinedList = it->refineMe();
+        mountain.erase(it++);
+        mountain.merge(refinedList);
+        /*
+        for(list<Triangle>::iterator itr = refinedList.begin(); itr != refinedList.end(); ++itr)
+        {
+            mountain.push_back(*itr);
+        }
 
-        for(unsigned i = 0; i < it->getNeighbors().size(); ++i)
+        refinedList.clear();
+        */
+        //cout << "----------size: " << mountain.size() << endl;
+    }
+    for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end();++itr)
+    {
+        //cout << itr->getId() << endl;
+
+        for(unsigned i = 0; i < itr->getVertices().size(); ++i)
         {
-            cout << it->getNeighbors()[i]->getId() << ", ";
+            fout << itr->getVertices()[i].getX() << " "
+            << itr->getVertices()[i].getY() << " "
+            << itr->getVertices()[i].getZ() << endl;
+            /*
+            cout << itr->getVertices()[i].getX() << " "
+            << itr->getVertices()[i].getY() << " "
+            << itr->getVertices()[i].getZ() << endl;*/
         }
-        list<Triangle> doodooltala = it->refineMe();
-        //mountain.erase(it);
-        mountain.merge(doodooltala);
-        cout << endl << endl;
-        if(mountain.size() > 15)
-        {
-            break;
-        }
+        //cout << endl << endl;
     }
     return 0;
 }

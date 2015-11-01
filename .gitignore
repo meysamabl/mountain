@@ -2,4 +2,4 @@
 *.depend
 *.layout
 bin/Debug/SecondAssignment
-
+*.dat

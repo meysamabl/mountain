@@ -60,6 +60,7 @@ class Triangle
 
         void setEdges(vector<Edge> val) { edges = val; }
 
+        vector<Point> getVertices() { return vertices;}
 
     protected:
     private:
