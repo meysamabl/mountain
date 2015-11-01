@@ -1,0 +1,2 @@
+plot [:][-10:10] "test_output.dat"  using 1:2:3 with lines
+pause -1
