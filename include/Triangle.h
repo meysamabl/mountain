@@ -42,6 +42,8 @@ class Triangle
 
         bool addIfNeighbor(Triangle* neighbor);
 
+        bool isUsable();
+
         void updateTargetPointer(Triangle* neighbor, Triangle* updatePointer);
 
         Point getDeviatedCentroid();
@@ -72,6 +74,8 @@ class Triangle
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();
         Point findCentroid();
+        vector<double> calculateCrossProduct();
+        const double COSINE_45 = 0.707;
 };
 
 #endif // TRIANGLE_H

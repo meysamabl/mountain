@@ -21,6 +21,8 @@ class Edge
 
         void calculateSideLength();
 
+        vector<double> getDeltas();
+
         bool operator== (const Edge& rhs)
         {
             return this->points[0] == rhs.points[0] && this->points[1] == rhs.points[1];
@@ -55,7 +57,6 @@ class Edge
     private:
         vector<Point> points; //!< Member variable "points"
         double sideLength; //!< Member variable "sideLength"
-        vector<double> getDeltas();
 };
 
 #endif // EDGE_H

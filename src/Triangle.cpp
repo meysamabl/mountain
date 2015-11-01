@@ -159,6 +159,30 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
     }
 }
 
+vector<double> Triangle::calculateCrossProduct()
+{
+    double a,b,c,d,e,f,i,j,k;
+    vector<double> v0 = edges[0].getDeltas();
+    a = v0[0]; b = v0[1]; c = v0[2];
+    vector<double> v1 = edges[1].getDeltas();
+    d = v1[0]; e = v1[1]; f = v1[2];
+    vector<double> cross;
+    i = (b*f - c*e);
+    j = (a*f - c*d) * (-1);
+    k = (a*e - b*d);
+    cross.push_back(i);
+    cross.push_back(j);
+    cross.push_back(k);
+    return cross;
+}
+
+bool Triangle::isUsable()
+{
+    vector<double> vectors = calculateCrossProduct();
+    double l = sqrt(pow(vectors[0], 2.0) + pow(vectors[1], 2.0) + pow(vectors[2], 2.0));
+    return vectors[2]/l > COSINE_45;
+}
+
 Triangle::~Triangle()
 {
     //dtor
