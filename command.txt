@@ -1,2 +1,4 @@
-plot [:][-10:10] "test_output.dat"  using 1:2:3 with lines
+set dgrid3d 30,30
+set hidden3d
+splot "test_output.dat" u 1:2:3 with lines
 pause -1

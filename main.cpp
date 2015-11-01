@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <random>
-
+#include <time.h>
 #include "Node.h"
 #include "Triangle.h"
 #include "DijkastraAlgorithm.h"
@@ -121,6 +121,7 @@ int main ()
         }
         //cout << endl << endl;
     }
+    system("gnuplot command.txt ");
     return 0;
 }
 /*
