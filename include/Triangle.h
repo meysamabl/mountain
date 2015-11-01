@@ -42,6 +42,8 @@ class Triangle
 
         bool addIfNeighbor(Triangle* neighbor);
 
+        void updateTargetPointer(Triangle* neighbor, Triangle* updatePointer);
+
         Point getDeviatedCentroid();
 
         list<Triangle> refineMe();

@@ -127,7 +127,7 @@ list<Triangle> Triangle::refineMe()
             {
                 if(it->addIfNeighbor(&(*itr)))
                 {
-                    cout << "\n---------" << it->getId() << "neighbors--------------: " << itr->getId() << ", ";
+                    cout << it->getId() << " adding " << (*itr).getId() << "--------" << endl;
                 }
             }
         }
@@ -135,11 +135,26 @@ list<Triangle> Triangle::refineMe()
         {
             if(it->addIfNeighbor(neighbors[i]))
             {
-                cout << "\n" << it->getId() << "**: " << neighbors[i]->getId() << ", ";
+                cout << it->getId() << " adding " << neighbors[i]->getId() << "*******" << endl;
+                updateTargetPointer(neighbors[i], &(*it));
             }
         }
     }
     return triangles;
+}
+
+void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
+{
+    for(unsigned i = 0; i < neighbor->getNeighbors().size();++i)
+    {
+        if(neighbor->getNeighbors()[i]==this)
+        {
+             neighbor->getNeighbors()[i] = updatePointer;
+             cout << neighbor->getId()
+             << " updating the neghibor pointer: " << neighbor->getNeighbors()[i]->getId() << endl;
+             break;
+        }
+    }
 }
 
 Triangle::~Triangle()

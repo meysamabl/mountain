@@ -94,7 +94,7 @@ int main ()
         //mountain.erase(it);
         mountain.merge(doodooltala);
         cout << endl << endl;
-        if(mountain.size() > 100)
+        if(mountain.size() > 15)
         {
             break;
         }
