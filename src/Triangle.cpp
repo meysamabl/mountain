@@ -73,7 +73,7 @@ Point Triangle::getDeviatedCentroid()
 {
     Point point = findCentroid();
     double alpha = getShortestSide().getSideLength();
-    distr.param(uniform_real_distribution<double>(0, alpha).param());
+    distr.param(uniform_real_distribution<double>(-alpha, alpha).param());
     alpha = distr(gen)/20;
     point.setX(point.getX() + alpha);
     point.setY(point.getY() + alpha);
