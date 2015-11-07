@@ -4,9 +4,7 @@
 #include "Edge.h"
 #include <list>
 #include <vector>
-#include <string>
 #include <iostream>
-#include <sstream>
 #include <random>
 #include <exception>
 #include <math.h>
@@ -16,7 +14,7 @@ using namespace std;
 class Triangle
 {
     public:
-        static int idStat;
+        static int idCounter;
         /** Default constructor */
         Triangle();
 
@@ -53,9 +51,9 @@ class Triangle
 
         list<Triangle> refineMe();
 
-        string getId() const { return id; }
+        int getId() const { return id; }
 
-        void setId(string val) { id = val; }
+        void setId(int val) { id = val; }
 
         vector<Triangle*>& getNeighbors()  { return neighbors; }
 
@@ -69,7 +67,7 @@ class Triangle
 
     protected:
     private:
-        string id;
+        int id;
         bool refinable;
         vector<Triangle*> neighbors;
         vector<Edge> edges;

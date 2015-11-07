@@ -2,7 +2,7 @@
 
 extern default_random_engine gen;
 extern uniform_real_distribution<double> distr;
-int Triangle::idStat = 0;
+int Triangle::idCounter = 0;
 
 Triangle::Triangle()
 {
@@ -11,10 +11,8 @@ Triangle::Triangle()
 
 Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
 {
-    std::ostringstream ss;
-    ss << idStat;
-    id = "Triangle #" + ss.str();
-    idStat++;
+    id = idCounter;
+    idCounter++;
     Edge* eptr = nullptr;
     eptr = new Edge(verticesVals[0].getX(),verticesVals[0].getY(),verticesVals[0].getZ(),
                                 verticesVals[1].getX(), verticesVals[1].getY(), verticesVals[1].getZ());
