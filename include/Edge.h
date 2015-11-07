@@ -25,12 +25,18 @@ class Edge
 
         bool operator== (const Edge& rhs)
         {
-            return this->points[0] == rhs.points[0] && this->points[1] == rhs.points[1];
+            return (this->points[0] == rhs.points[0] && this->points[1] == rhs.points[1])
+                || (this->points[0] == rhs.points[1] && this->points[1] == rhs.points[0]);
         }
 
         bool operator<= (const Edge& rhs)
         {
             return sideLength <= rhs.sideLength;
+        }
+
+        bool operator>= (const Edge& rhs)
+        {
+            return sideLength >= rhs.sideLength;
         }
         /** Access points
          * \return The current value of points

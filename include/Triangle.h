@@ -9,6 +9,7 @@
 #include <sstream>
 #include <random>
 #include <exception>
+#include <math.h>
 
 using namespace std;
 
@@ -42,7 +43,9 @@ class Triangle
 
         bool addIfNeighbor(Triangle* neighbor);
 
-        bool isUsable();
+        bool isTraversable();
+
+        bool isRefinable() const { return refinable; }
 
         void updateTargetPointer(Triangle* neighbor, Triangle* updatePointer);
 
@@ -67,14 +70,18 @@ class Triangle
     protected:
     private:
         string id;
+        bool refinable;
         vector<Triangle*> neighbors;
         vector<Edge> edges;
         vector<Point> vertices;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();
+        Edge& getLongestSide();
         Point findCentroid();
         vector<double> calculateCrossProduct();
+        double calculateAspectRatio();
+        vector<double> getDelta(const Point& pointDiff, const Point& pointCommon);
         const double COSINE_45 = 0.707;
 };
 

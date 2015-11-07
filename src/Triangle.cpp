@@ -26,6 +26,7 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
                                 verticesVals[2].getX(), verticesVals[2].getY(), verticesVals[2].getZ());
     edges.push_back(*eptr);
     eptr = nullptr;
+    refinable = calculateAspectRatio() < 0.1;
 }
 
 bool Triangle::isNeighbor(const Triangle& triangle)
@@ -69,12 +70,19 @@ Edge& Triangle::getShortestSide()
                             : edges[1] <= edges[2] ? edges[1] : edges[2];
 }
 
+Edge& Triangle::getLongestSide()
+{
+    return (edges[0] >= edges[1] && edges[0] >= edges[2]) ? edges[0]
+                            : edges[1] >= edges[2] ? edges[1] : edges[2];
+}
+
+
 Point Triangle::getDeviatedCentroid()
 {
     Point point = findCentroid();
     double alpha = getShortestSide().getSideLength();
     distr.param(uniform_real_distribution<double>(-alpha, alpha).param());
-    alpha = distr(gen)/20;
+    alpha = distr(gen)/30;
     point.setX(point.getX() + alpha);
     point.setY(point.getY() + alpha);
     point.setZ(point.getZ() + alpha);
@@ -176,7 +184,43 @@ vector<double> Triangle::calculateCrossProduct()
     return cross;
 }
 
-bool Triangle::isUsable()
+double Triangle::calculateAspectRatio()
+{
+    Edge longestSide = getLongestSide();
+    Edge shortestSide = getShortestSide();
+    pair<Point, Point> lPairs, sPairs;
+
+    if(longestSide.getPoints()[0] == shortestSide.getPoints()[0]) {
+        lPairs = make_pair(longestSide.getPoints()[0], longestSide.getPoints()[1]);
+        sPairs = make_pair(shortestSide.getPoints()[0], shortestSide.getPoints()[1]);
+    } else if (longestSide.getPoints()[1] == shortestSide.getPoints()[1]) {
+        lPairs = make_pair(longestSide.getPoints()[1], longestSide.getPoints()[0]);
+        sPairs = make_pair(shortestSide.getPoints()[1], shortestSide.getPoints()[0]);
+    } else {
+        lPairs = make_pair(longestSide.getPoints()[0], longestSide.getPoints()[1]);
+        sPairs = make_pair(shortestSide.getPoints()[1], shortestSide.getPoints()[0]);
+    }
+    vector<double> lsDelta = getDelta(lPairs.second, lPairs.first);
+    vector<double> ssDelta = getDelta(sPairs.second, sPairs.first);
+    double alphaAngle = acos(((lsDelta[0]*ssDelta[0]) + (lsDelta[1]*ssDelta[1]) + (lsDelta[2]*ssDelta[2]))
+                                /(longestSide.getSideLength() * shortestSide.getSideLength()));
+    double height = shortestSide.getSideLength() * sin(alphaAngle);
+    return (height/longestSide.getSideLength());
+}
+
+vector<double> Triangle::getDelta(const Point& pointDiff, const Point& pointCommon)
+{
+    vector<double> deltas;
+    double x = pointDiff.getX() - pointCommon.getX();
+    double y = pointDiff.getY() - pointCommon.getY();
+    double z = pointDiff.getZ() - pointCommon.getZ();
+    deltas.push_back(x);
+    deltas.push_back(y);
+    deltas.push_back(z);
+    return deltas;
+}
+
+bool Triangle::isTraversable()
 {
     vector<double> vectors = calculateCrossProduct();
     double l = sqrt(pow(vectors[0], 2.0) + pow(vectors[1], 2.0) + pow(vectors[2], 2.0));
