@@ -1,5 +1,5 @@
 set view 60,75
-set dgrid3d 30,30
+set dgrid3d 40,40
 set hidden3d
 splot "test_output.dat" u 1:2:3 with lines
 pause -1
