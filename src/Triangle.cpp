@@ -14,14 +14,14 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
     id = idCounter;
     idCounter++;
     Edge* eptr = nullptr;
-    eptr = new Edge(verticesVals[0].getX(),verticesVals[0].getY(),verticesVals[0].getZ(),
-                                verticesVals[1].getX(), verticesVals[1].getY(), verticesVals[1].getZ());
+    eptr = new Edge(verticesVals.at(0).getX(),verticesVals.at(0).getY(),verticesVals.at(0).getZ(),
+                                verticesVals.at(1).getX(), verticesVals.at(1).getY(), verticesVals.at(1).getZ());
     edges.push_back(*eptr);
-    eptr = new Edge(verticesVals[0].getX(),verticesVals[0].getY(),verticesVals[0].getZ(),
-                                verticesVals[2].getX(), verticesVals[2].getY(), verticesVals[2].getZ());
+    eptr = new Edge(verticesVals.at(0).getX(),verticesVals.at(0).getY(),verticesVals.at(0).getZ(),
+                                verticesVals.at(2).getX(), verticesVals.at(2).getY(), verticesVals.at(2).getZ());
     edges.push_back(*eptr);
-    eptr = new Edge(verticesVals[1].getX(),verticesVals[1].getY(),verticesVals[1].getZ(),
-                                verticesVals[2].getX(), verticesVals[2].getY(), verticesVals[2].getZ());
+    eptr = new Edge(verticesVals.at(1).getX(),verticesVals.at(1).getY(),verticesVals.at(1).getZ(),
+                                verticesVals.at(2).getX(), verticesVals.at(2).getY(), verticesVals.at(2).getZ());
     edges.push_back(*eptr);
     eptr = nullptr;
     refinable = calculateAspectRatio() > 0.1;
@@ -33,7 +33,7 @@ bool Triangle::isNeighbor(const Triangle& triangle)
     {
         for(unsigned j=0; j < triangle.edges.size(); ++j)
         {
-            if(edges[i] == triangle.edges[j])
+            if(edges.at(i) == triangle.edges.at(j))
             {
                 return true;
             }
@@ -64,14 +64,14 @@ bool Triangle::addIfNeighbor(Triangle* neighbor)
 
 Edge& Triangle::getShortestSide()
 {
-    return (edges[0] <= edges[1] && edges[0] <= edges[2]) ? edges[0]
-                            : edges[1] <= edges[2] ? edges[1] : edges[2];
+    return (edges.at(0) <= edges.at(1) && edges.at(0) <= edges.at(2)) ? edges.at(0)
+                            : edges.at(1) <= edges.at(2) ? edges.at(1) : edges.at(2);
 }
 
 Edge& Triangle::getLongestSide()
 {
-    return (edges[0] >= edges[1] && edges[0] >= edges[2]) ? edges[0]
-                            : edges[1] >= edges[2] ? edges[1] : edges[2];
+    return (edges.at(0) >= edges.at(1) && edges.at(0) >= edges.at(2)) ? edges.at(0)
+                            : edges.at(1) >= edges.at(2) ? edges.at(1) : edges.at(2);
 }
 
 
@@ -90,9 +90,9 @@ Point Triangle::getDeviatedCentroid()
 Point Triangle::findCentroid()
 {
     double x,y,z;
-    x = (vertices[0].getX() + vertices[1].getX() + vertices[2].getX())/3;
-    y = (vertices[0].getY() + vertices[1].getY() + vertices[2].getY())/3;
-    z = (vertices[0].getZ() + vertices[1].getZ() + vertices[2].getZ())/3;
+    x = (vertices.at(0).getX() + vertices.at(1).getX() + vertices.at(2).getX())/3;
+    y = (vertices.at(0).getY() + vertices.at(1).getY() + vertices.at(2).getY())/3;
+    z = (vertices.at(0).getZ() + vertices.at(1).getZ() + vertices.at(2).getZ())/3;
     Point centeroid(x,y,z);
     return centeroid;
 }
@@ -105,22 +105,22 @@ list<Triangle> Triangle::refineMe()
     Point center = getDeviatedCentroid();
     /// first triangle
     points.push_back(center);
-    points.push_back(vertices[0]);
-    points.push_back(vertices[2]);
+    points.push_back(vertices.at(0));
+    points.push_back(vertices.at(2));
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
     /// second triangle
     points.push_back(center);
-    points.push_back(vertices[0]);
-    points.push_back(vertices[1]);
+    points.push_back(vertices.at(0));
+    points.push_back(vertices.at(1));
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
     /// third triangle
     points.push_back(center);
-    points.push_back(vertices[1]);
-    points.push_back(vertices[2]);
+    points.push_back(vertices.at(1));
+    points.push_back(vertices.at(2));
     tptr = new Triangle(points);
     triangles.push_back(*tptr);
     points.clear();
@@ -141,10 +141,10 @@ list<Triangle> Triangle::refineMe()
         }
         for(unsigned i = 0; i < neighbors.size(); ++i)
         {
-            if(it->addIfNeighbor(neighbors[i]))
+            if(it->addIfNeighbor(neighbors.at(i)))
             {
-                //cout << it->getId() << " adding " << neighbors[i]->getId() << "*******" << endl;
-                updateTargetPointer(neighbors[i], &(*it));
+                //cout << it->getId() << " adding " << neighbors.at(i)->getId() << "*******" << endl;
+                updateTargetPointer(neighbors.at(i), &(*it));
             }
         }
     }
@@ -155,11 +155,11 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
 {
     for(unsigned i = 0; i < neighbor->getNeighbors().size();++i)
     {
-        if(neighbor->getNeighbors()[i]==this)
+        if(neighbor->getNeighbors().at(i)==this)
         {
-             neighbor->getNeighbors()[i] = updatePointer;
+             neighbor->getNeighbors().at(i) = updatePointer;
              //cout << neighbor->getId()
-             //<< " updating the neghibor pointer: " << neighbor->getNeighbors()[i]->getId() << endl;
+             //<< " updating the neghibor pointer: " << neighbor->getNeighbors().at(i)->getId() << endl;
              break;
         }
     }
@@ -168,10 +168,10 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
 vector<double> Triangle::calculateCrossProduct()
 {
     double a,b,c,d,e,f,i,j,k;
-    vector<double> v0 = edges[0].getDeltas();
-    a = v0[0]; b = v0[1]; c = v0[2];
-    vector<double> v1 = edges[1].getDeltas();
-    d = v1[0]; e = v1[1]; f = v1[2];
+    vector<double> v0 = edges.at(0).getDeltas();
+    a = v0.at(0); b = v0.at(1); c = v0.at(2);
+    vector<double> v1 = edges.at(1).getDeltas();
+    d = v1.at(0); e = v1.at(1); f = v1.at(2);
     vector<double> cross;
     i = (b*f - c*e);
     j = (a*f - c*d) * (-1);
@@ -188,19 +188,19 @@ double Triangle::calculateAspectRatio()
     Edge shortestSide = getShortestSide();
     pair<Point, Point> lPairs, sPairs;
 
-    if(longestSide.getPoints()[0] == shortestSide.getPoints()[0]) {
-        lPairs = make_pair(longestSide.getPoints()[0], longestSide.getPoints()[1]);
-        sPairs = make_pair(shortestSide.getPoints()[0], shortestSide.getPoints()[1]);
-    } else if (longestSide.getPoints()[1] == shortestSide.getPoints()[1]) {
-        lPairs = make_pair(longestSide.getPoints()[1], longestSide.getPoints()[0]);
-        sPairs = make_pair(shortestSide.getPoints()[1], shortestSide.getPoints()[0]);
+    if(longestSide.getPoints().at(0) == shortestSide.getPoints().at(0)) {
+        lPairs = make_pair(longestSide.getPoints().at(0), longestSide.getPoints().at(1));
+        sPairs = make_pair(shortestSide.getPoints().at(0), shortestSide.getPoints().at(1));
+    } else if (longestSide.getPoints().at(1) == shortestSide.getPoints().at(1)) {
+        lPairs = make_pair(longestSide.getPoints().at(1), longestSide.getPoints().at(0));
+        sPairs = make_pair(shortestSide.getPoints().at(1), shortestSide.getPoints().at(0));
     } else {
-        lPairs = make_pair(longestSide.getPoints()[0], longestSide.getPoints()[1]);
-        sPairs = make_pair(shortestSide.getPoints()[1], shortestSide.getPoints()[0]);
+        lPairs = make_pair(longestSide.getPoints().at(0), longestSide.getPoints().at(1));
+        sPairs = make_pair(shortestSide.getPoints().at(1), shortestSide.getPoints().at(0));
     }
     vector<double> lsDelta = getDelta(lPairs.second, lPairs.first);
     vector<double> ssDelta = getDelta(sPairs.second, sPairs.first);
-    double alphaAngle = acos(((lsDelta[0]*ssDelta[0]) + (lsDelta[1]*ssDelta[1]) + (lsDelta[2]*ssDelta[2]))
+    double alphaAngle = acos(((lsDelta.at(0)*ssDelta.at(0)) + (lsDelta.at(1)*ssDelta.at(1)) + (lsDelta.at(2)*ssDelta.at(2)))
                                 /(longestSide.getSideLength() * shortestSide.getSideLength()));
     double height = shortestSide.getSideLength() * sin(alphaAngle);
     return (height/longestSide.getSideLength());
@@ -221,8 +221,8 @@ vector<double> Triangle::getDelta(const Point& pointDiff, const Point& pointComm
 bool Triangle::isTraversable()
 {
     vector<double> vectors = calculateCrossProduct();
-    double l = sqrt(pow(vectors[0], 2.0) + pow(vectors[1], 2.0) + pow(vectors[2], 2.0));
-    return vectors[2]/l > COSINE_45;
+    double l = sqrt(pow(vectors.at(0), 2.0) + pow(vectors.at(1), 2.0) + pow(vectors.at(2), 2.0));
+    return vectors.at(2)/l > COSINE_45;
 }
 
 Triangle::~Triangle()
