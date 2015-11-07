@@ -165,6 +165,11 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
     }
 }
 
+Node Triangle::getNodeRepresentation()
+{
+
+}
+
 vector<double> Triangle::calculateCrossProduct()
 {
     double a,b,c,d,e,f,i,j,k;

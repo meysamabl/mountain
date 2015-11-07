@@ -48,6 +48,8 @@ class Triangle
 
         void updateTargetPointer(Triangle* neighbor, Triangle* updatePointer);
 
+        Node getNodeRepresentation();
+
         Point getDeviatedCentroid();
 
         list<Triangle> refineMe();
@@ -73,7 +75,6 @@ class Triangle
         vector<Triangle*> neighbors;
         vector<Edge> edges;
         vector<Point> vertices;
-        Node nodeRepresentation;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();
