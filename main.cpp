@@ -88,11 +88,11 @@ int main ()
     list<Triangle> refinedList;
     while(it != mountain.end() && mountain.size() < 20000)
     {
-        /*
-        if(it == mountain.end())
+
+        if(!it->isRefinable())
         {
-            it = mountain.begin();
-        }*/
+            ++it;
+        }
         refinedList = it->refineMe();
         mountain.erase(it++);
         mountain.merge(refinedList);
