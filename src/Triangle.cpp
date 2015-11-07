@@ -200,9 +200,14 @@ double Triangle::calculateAspectRatio()
     }
     vector<double> lsDelta = getDelta(lPairs.second, lPairs.first);
     vector<double> ssDelta = getDelta(sPairs.second, sPairs.first);
-    double alphaAngle = acos(((lsDelta.at(0)*ssDelta.at(0)) + (lsDelta.at(1)*ssDelta.at(1)) + (lsDelta.at(2)*ssDelta.at(2)))
-                                /(longestSide.getSideLength() * shortestSide.getSideLength()));
+    double dotProduct = (lsDelta.at(0)*ssDelta.at(0)) + (lsDelta.at(1)*ssDelta.at(1)) + (lsDelta.at(2)*ssDelta.at(2));
+    double lengthProduct = longestSide.getSideLength() * shortestSide.getSideLength();
+    cout << "Triangle #" << id << endl;
+    cout << "Dot Product => " << dotProduct <<"\tLength Product => " << lengthProduct << endl;
+    double alphaAngle = acos(dotProduct/ lengthProduct);
+    cout << "Angle Alpha => " << alphaAngle * 180 / 3.14156592 << " degrees." << endl;
     double height = shortestSide.getSideLength() * sin(alphaAngle);
+    cout << "Height => " << height << "\tLongest Side => " << longestSide.getSideLength() << endl;
     return (height/longestSide.getSideLength());
 }
 
