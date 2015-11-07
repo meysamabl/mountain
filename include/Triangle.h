@@ -68,6 +68,8 @@ class Triangle
 
         vector<Point> getVertices() { return vertices;}
 
+        Point getCentroid() const { return centroid; }
+
     protected:
     private:
         int id;
@@ -75,6 +77,7 @@ class Triangle
         vector<Triangle*> neighbors;
         vector<Edge> edges;
         vector<Point> vertices;
+        Point centroid;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();

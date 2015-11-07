@@ -25,6 +25,7 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
     edges.push_back(*eptr);
     eptr = nullptr;
     refinable = calculateAspectRatio() > 0.1;
+    centroid = findCentroid();
 }
 
 bool Triangle::isNeighbor(const Triangle& triangle)
@@ -77,7 +78,7 @@ Edge& Triangle::getLongestSide()
 
 Point Triangle::getDeviatedCentroid()
 {
-    Point point = findCentroid();
+    Point point = getCentroid();
     double alpha = getShortestSide().getSideLength();
     distr.param(uniform_real_distribution<double>(-alpha, alpha).param());
     alpha = distr(gen)/30;
@@ -167,7 +168,13 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
 
 Node Triangle::getNodeRepresentation()
 {
-
+    Node nodeRep(id);
+    Point myCentroid = getCentroid();
+    for(unsigned i = 0; i < neighbors.size(); i++)
+    {
+        nodeRep.addPath(neighbors.at(i)->getId(), 0.0);
+    }
+    return nodeRep;
 }
 
 vector<double> Triangle::calculateCrossProduct()
