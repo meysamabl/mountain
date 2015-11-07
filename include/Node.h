@@ -13,7 +13,7 @@ class Node
         /** Default destructor */
         virtual ~Node();
 
-        void addPath(char ch, int dest);
+        void addPath(char ch, double dest);
 
         bool operator== (const Node& rhs) {
             return this->name == rhs.name;
@@ -22,11 +22,11 @@ class Node
         /** Access myPath
          * \return The current value of myPath
          */
-        const multimap<char,int>& GetmyPath() const { return myPath; }
+        const multimap<char,double>& GetmyPath() const { return myPath; }
         /** Set myPath
          * \param val New value to set
          */
-        void SetmyPath(multimap<char,int> val) { myPath = val; }
+        void SetmyPath(multimap<char,double> val) { myPath = val; }
         /** Access name
          * \return The current value of name
          */
@@ -37,7 +37,7 @@ class Node
         void Setname(char val) { name = val; }
     protected:
     private:
-        multimap<char,int> myPath; //!< Member variable "myPath"
+        multimap<char,double> myPath; //!< Member variable "myPath"
         char name; //!< Member variable "name"
 };
 

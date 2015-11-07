@@ -17,7 +17,7 @@ class DijkastraAlgorithm
         DijkastraAlgorithm();
         /** Default destructor */
         virtual ~DijkastraAlgorithm();
-        static vector<pair<char,int>> findShortestPaths(const vector<Node>& nodes, const char& startingNode);
+        static vector<pair<char,double>> findShortestPaths(const vector<Node>& nodes, const char& startingNode);
     protected:
     private:
 };

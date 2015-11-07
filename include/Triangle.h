@@ -8,6 +8,7 @@
 #include <random>
 #include <exception>
 #include <math.h>
+#include <Node.h>
 
 using namespace std;
 
@@ -72,6 +73,7 @@ class Triangle
         vector<Triangle*> neighbors;
         vector<Edge> edges;
         vector<Point> vertices;
+        Node nodeRepresentation;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();

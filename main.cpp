@@ -170,7 +170,7 @@ int main()
     myNetwork.push_back(*nodePtr);
     for(unsigned i = 0; i < myNetwork.size(); i++)
     {   cout << "Node \"" << myNetwork[i].Getname() << "\" has the following paths:  " << endl;
-        for(multimap<char, int>::const_iterator it = myNetwork[i].GetmyPath().cbegin();
+        for(multimap<char, double>::const_iterator it = myNetwork[i].GetmyPath().cbegin();
                                                 it != myNetwork[i].GetmyPath().cend(); it++)
         {
             cout << (*it).first << " ==> " << (*it).second << endl;
@@ -188,8 +188,8 @@ int main()
         }
     }
     if(found) {
-        vector<pair<char,int>> sol = DijkastraAlgorithm::findShortestPaths(myNetwork, startingNode);
-        for(vector<pair<char,int>>::iterator it = sol.begin(); it != sol.end(); ++it)
+        vector<pair<char,double>> sol = DijkastraAlgorithm::findShortestPaths(myNetwork, startingNode);
+        for(vector<pair<char,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
         {
             cout << it->first << " " << it->second << endl;
         }
