@@ -10,9 +10,9 @@ Node::~Node()
     //dtor
 }
 
-Node::Node(char name) : name(name) {}
+Node::Node(int name) : name(name) {}
 
-void Node::addPath(char ch, double dest)
+void Node::addPath(int ch, double dest)
 {
     myPath.insert(make_pair(ch, dest));
 }

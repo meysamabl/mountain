@@ -2,7 +2,7 @@
 
 struct comparison
 {
-  bool operator()(const pair<char,double>& lhs, const pair<char,double>& rhs) const
+  bool operator()(const pair<int,double>& lhs, const pair<int,double>& rhs) const
   {
     return lhs.second > rhs.second;
   }
@@ -18,13 +18,12 @@ DijkastraAlgorithm::~DijkastraAlgorithm()
     //dtor
 }
 
-vector<pair<char,double>> DijkastraAlgorithm::findShortestPaths(const vector<Node>& network, const char& startingNode)
+vector<pair<int,double>> DijkastraAlgorithm::findShortestPaths(const vector<Node>& network, const int& startingNode)
 {
-    /// normal map becuase we should not have same char keys
-    vector<pair<char, double>> solution;
-    priority_queue<pair<char, double>, vector<pair<char,double>>, comparison> que;
+    vector<pair<int, double>> solution;
+    priority_queue<pair<int, double>, vector<pair<int,double>>, comparison> que;
     que.push(make_pair(startingNode, 0));
-    pair<char,double> frontQue;
+    pair<int,double> frontQue;
     bool found = false;
     while(!que.empty()) {
         found = false;
@@ -44,7 +43,7 @@ vector<pair<char,double>> DijkastraAlgorithm::findShortestPaths(const vector<Nod
             {
                 if(network[i].Getname() == solution.back().first)
                 {
-                    for(multimap<char,double>::const_iterator pit = network[i].GetmyPath().cbegin();
+                    for(multimap<int,double>::const_iterator pit = network[i].GetmyPath().cbegin();
                                                     pit != network[i].GetmyPath().cend(); ++pit)
                     {
                         que.push(make_pair((*pit).first, (*pit).second + solution.back().second));

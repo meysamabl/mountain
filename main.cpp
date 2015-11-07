@@ -137,46 +137,46 @@ int main ()
 int main()
 {
     vector<Node> myNetwork;
-    char startingNode;
+    int startingNode;
     Node * nodePtr = nullptr;
 
-    nodePtr = new Node('a');
-    nodePtr->addPath('h', 8);
-    nodePtr->addPath('d', 4);
+    nodePtr = new Node(1);
+    nodePtr->addPath(8, 8);
+    nodePtr->addPath(4, 4);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('b');
-    nodePtr->addPath('d',5);
+    nodePtr = new Node(2);
+    nodePtr->addPath(4,5);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('c');
-    nodePtr->addPath('h', 3);
-    nodePtr->addPath('f', 5);
+    nodePtr = new Node(3);
+    nodePtr->addPath(8, 3);
+    nodePtr->addPath(6, 5);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('d');
-    nodePtr->addPath('h', 3);
-    nodePtr->addPath('c', 4);
-    nodePtr->addPath('f', 10);
+    nodePtr = new Node(4);
+    nodePtr->addPath(8, 3);
+    nodePtr->addPath(3, 4);
+    nodePtr->addPath(6, 10);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('e');
-    nodePtr->addPath('a', 2);
+    nodePtr = new Node(5);
+    nodePtr->addPath(1, 2);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('f');
-    nodePtr->addPath('b', 4);
+    nodePtr = new Node(6);
+    nodePtr->addPath(2, 4);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('g');
-    nodePtr->addPath('f', 2);
+    nodePtr = new Node(7);
+    nodePtr->addPath(6, 2);
     myNetwork.push_back(*nodePtr);
-    nodePtr = new Node('h');
-    nodePtr->addPath('e', 3);
+    nodePtr = new Node(8);
+    nodePtr->addPath(5, 3);
     myNetwork.push_back(*nodePtr);
     for(unsigned i = 0; i < myNetwork.size(); i++)
     {   cout << "Node \"" << myNetwork[i].Getname() << "\" has the following paths:  " << endl;
-        for(multimap<char, double>::const_iterator it = myNetwork[i].GetmyPath().cbegin();
+        for(multimap<int, double>::const_iterator it = myNetwork[i].GetmyPath().cbegin();
                                                 it != myNetwork[i].GetmyPath().cend(); it++)
         {
-            cout << (*it).first << " ==> " << (*it).second << endl;
+            cout << "Triangle #\"" << (*it).first <<"\"" << " ==> " << (*it).second << endl;
         }
     }
-    cout << "Please choose your starting node (a-h): ";
+    cout << "Please choose your starting node (1-8): ";
     cin >> startingNode;
     cout << "Starting position is: " << startingNode << endl;
     bool found = false;
@@ -188,8 +188,8 @@ int main()
         }
     }
     if(found) {
-        vector<pair<char,double>> sol = DijkastraAlgorithm::findShortestPaths(myNetwork, startingNode);
-        for(vector<pair<char,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
+        vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(myNetwork, startingNode);
+        for(vector<pair<int,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
         {
             cout << it->first << " " << it->second << endl;
         }
