@@ -26,7 +26,7 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
                                 verticesVals[2].getX(), verticesVals[2].getY(), verticesVals[2].getZ());
     edges.push_back(*eptr);
     eptr = nullptr;
-    refinable = calculateAspectRatio() < 0.1;
+    refinable = calculateAspectRatio() > 0.1;
 }
 
 bool Triangle::isNeighbor(const Triangle& triangle)
