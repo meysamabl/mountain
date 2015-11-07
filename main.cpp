@@ -20,41 +20,41 @@ list<Triangle> initialTriangles(double x0, double y0, double z0)
     Point* pptr = nullptr;
 
     ///first trianlge
-    pptr = new Point(x0,y0,z0);
+    pptr = new Point(0, 0, 0);
     vertices.push_back(*pptr);
     pptr = new Point(100, 0, 0);
     vertices.push_back(*pptr);
-    pptr = new Point(0, 0, 0);
+    pptr = new Point(x0,y0,z0);
     vertices.push_back(*pptr);
     tptr = new Triangle(vertices);
     tris.push_back(*tptr);
     vertices.clear();
     /// second triangle
-    pptr = new Point(x0,y0,z0);
-    vertices.push_back(*pptr);
     pptr = new Point(0, 100, 0);
     vertices.push_back(*pptr);
     pptr = new Point(0, 0, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(x0,y0,z0);
     vertices.push_back(*pptr);
     tptr = new Triangle(vertices);
     tris.push_back(*tptr);
     vertices.clear();
     /// third triangle
-    pptr = new Point(x0,y0,z0);
-    vertices.push_back(*pptr);
     pptr = new Point(0, 100, 0);
     vertices.push_back(*pptr);
     pptr = new Point(100,100, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(x0,y0,z0);
     vertices.push_back(*pptr);
     tptr = new Triangle(vertices);
     tris.push_back(*tptr);
     vertices.clear();
     /// forth triangle
-    pptr = new Point(x0,y0,z0);
-    vertices.push_back(*pptr);
     pptr = new Point(100, 100, 0);
     vertices.push_back(*pptr);
     pptr = new Point(100,0, 0);
+    vertices.push_back(*pptr);
+    pptr = new Point(x0,y0,z0);
     vertices.push_back(*pptr);
     tptr = new Triangle(vertices);
     tris.push_back(*tptr);
