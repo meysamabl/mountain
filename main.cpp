@@ -86,12 +86,13 @@ int main ()
     mountain.merge(initialTriangles(x0,y0,z0));
     list<Triangle>::iterator it = mountain.begin();
     list<Triangle> refinedList;
-    while(mountain.size() < 20000)
+    while(it != mountain.end() && mountain.size() < 20000)
     {
+        /*
         if(it == mountain.end())
         {
             it = mountain.begin();
-        }
+        }*/
         refinedList = it->refineMe();
         mountain.erase(it++);
         mountain.merge(refinedList);
@@ -103,23 +104,31 @@ int main ()
 
         refinedList.clear();
         */
-        //cout << "----------size: " << mountain.size() << endl;
     }
+    //cout << "----------size: " << mountain.size() << endl;
     for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end();++itr)
     {
-        //cout << itr->getId() << endl;
+        //cout << "Triangle #" << itr->getId() << endl;
 
         for(unsigned i = 0; i < itr->getVertices().size(); ++i)
         {
-            fout << itr->getVertices()[i].getX() << " "
-            << itr->getVertices()[i].getY() << " "
-            << itr->getVertices()[i].getZ() << endl;
+            fout << itr->getVertices().at(i).getX() << " "
+            << itr->getVertices().at(i).getY() << " "
+            << itr->getVertices().at(i).getZ() << endl;
             /*
-            cout << itr->getVertices()[i].getX() << " "
-            << itr->getVertices()[i].getY() << " "
-            << itr->getVertices()[i].getZ() << endl;*/
+            cout << itr->getVertices().at(i).getX() << " "
+            << itr->getVertices().at(i).getY() << " "
+            << itr->getVertices().at(i).getZ() << endl;
+            */
         }
-        //cout << endl << endl;
+        /*
+        cout << "Pointing at ==> ";
+        for(unsigned i = 0; i < itr->getNeighbors().size(); ++i)
+        {
+            cout << "Triangle #" << itr->getNeighbors().at(i)->getId() << ", ";
+        }
+        cout << endl << endl;
+        */
     }
     system("gnuplot command.txt ");
     return 0;
