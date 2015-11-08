@@ -24,7 +24,7 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
                                 verticesVals.at(2).getX(), verticesVals.at(2).getY(), verticesVals.at(2).getZ());
     edges.push_back(*eptr);
     eptr = nullptr;
-    refinable = calculateAspectRatio() > 0.1;
+    refinable = calculateAspectRatio() > 0.01;
     centroid = findCentroid();
 }
 
