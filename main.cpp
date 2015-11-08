@@ -165,8 +165,8 @@ int main ()
             return 0;
         }
         std::advance(it, startingNode);
-        cout << "Starting position: " << startingNode << endl;
-        vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(network, startingNode);
+        cout << "Starting Triangle #" << it->getId() << endl;
+        vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(network, it->getId());
         for(vector<pair<int,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
         {
             cout << "To-> " << it->first << ", Cost-> " << it->second << endl;
