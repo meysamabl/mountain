@@ -106,10 +106,11 @@ int main ()
         */
     }
     //cout << "----------size: " << mountain.size() << endl;
+    vector<Node> network;
     for(list<Triangle>::iterator itr = mountain.begin(); itr != mountain.end();++itr)
     {
         //cout << "Triangle #" << itr->getId() << endl;
-
+        network.push_back(itr->getNodeRepresentation());
         for(unsigned i = 0; i < itr->getVertices().size(); ++i)
         {
             fout << itr->getVertices().at(i).getX() << " "

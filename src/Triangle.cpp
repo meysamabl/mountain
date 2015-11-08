@@ -170,11 +170,24 @@ Node Triangle::getNodeRepresentation()
 {
     Node nodeRep(id);
     Point myCentroid = getCentroid();
+    Point neighborCentroid;
+    double distance = 0;
     for(unsigned i = 0; i < neighbors.size(); i++)
     {
-        nodeRep.addPath(neighbors.at(i)->getId(), 0.0);
+        neighborCentroid = neighbors.at(i)->getCentroid();
+        distance = calculateDistance(neighborCentroid, myCentroid);
+        nodeRep.addPath(neighbors.at(i)->getId(), distance);
     }
     return nodeRep;
+}
+
+double Triangle::calculateDistance(const Point& point1, const Point& point0)
+{
+    vector<double> delta = getDelta(point1, point0);
+    double a = delta.at(0);
+    double b = delta.at(1);
+    double c = delta.at(2);
+    return sqrt(pow(a , 2.0) + pow(b , 2.0) + pow(c, 2.0));
 }
 
 vector<double> Triangle::calculateCrossProduct()

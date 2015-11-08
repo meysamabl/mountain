@@ -85,6 +85,7 @@ class Triangle
         Point findCentroid();
         vector<double> calculateCrossProduct();
         double calculateAspectRatio();
+        double calculateDistance(const Point& point1, const Point& point0);
         vector<double> getDelta(const Point& pointDiff, const Point& pointCommon);
         const double COSINE_45 = 0.707;
 };
