@@ -174,9 +174,12 @@ Node Triangle::getNodeRepresentation()
     double distance = 0;
     for(unsigned i = 0; i < neighbors.size(); i++)
     {
-        neighborCentroid = neighbors.at(i)->getCentroid();
-        distance = calculateDistance(neighborCentroid, myCentroid);
-        nodeRep.addPath(neighbors.at(i)->getId(), distance);
+        if(neighbors.at(i)->isTraversable())
+        {
+            neighborCentroid = neighbors.at(i)->getCentroid();
+            distance = calculateDistance(neighborCentroid, myCentroid);
+            nodeRep.addPath(neighbors.at(i)->getId(), distance);
+        }
     }
     return nodeRep;
 }
@@ -195,12 +198,15 @@ vector<double> Triangle::calculateCrossProduct()
     double a,b,c,d,e,f,i,j,k;
     vector<double> v0 = edges.at(0).getDeltas();
     a = v0.at(0); b = v0.at(1); c = v0.at(2);
+    //cout <<"vector 0 " << a << ", " << b << ", " << c << endl;
     vector<double> v1 = edges.at(1).getDeltas();
     d = v1.at(0); e = v1.at(1); f = v1.at(2);
+    //cout <<"vector 1 " << d << ", " << e << ", " << f << endl;
     vector<double> cross;
     i = (b*f - c*e);
     j = (a*f - c*d) * (-1);
     k = (a*e - b*d);
+    //cout << "Cross Product : i-> " << i << " j-> " << j << " k-> " << k << endl;
     cross.push_back(i);
     cross.push_back(j);
     cross.push_back(k);
@@ -252,7 +258,9 @@ bool Triangle::isTraversable()
 {
     vector<double> vectors = calculateCrossProduct();
     double l = sqrt(pow(vectors.at(0), 2.0) + pow(vectors.at(1), 2.0) + pow(vectors.at(2), 2.0));
-    return vectors.at(2)/l > COSINE_45;
+    //cout << "Unit L-> " << l << endl;
+    //cout << "Value to decide : " << vectors.at(2)/l << endl;
+    return abs(vectors.at(2)/l) > COSINE_45;
 }
 
 Triangle::~Triangle()

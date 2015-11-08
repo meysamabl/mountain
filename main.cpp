@@ -75,6 +75,7 @@ list<Triangle> initialTriangles(double x0, double y0, double z0)
 int main ()
 {
     double x0,y0,z0;
+    unsigned numberOfTriangles;
     list<Triangle> mountain;
     fstream fout("test_output.dat", ios::out);
     gen.seed(time(NULL));
@@ -84,9 +85,11 @@ int main ()
     cin >> z0;
     cout << "Your initial position is: " << "(" << x0 << ", " << y0 << ", " << z0 << ")" << endl;
     mountain.merge(initialTriangles(x0,y0,z0));
+    cout << "Please indicate how many triangle to generate: ";
+    cin >> numberOfTriangles;
     list<Triangle>::iterator it = mountain.begin();
     list<Triangle> refinedList;
-    while(it != mountain.end() && mountain.size() < 20000)
+    while(it != mountain.end() && mountain.size() < numberOfTriangles)
     {
 
         if(!it->isRefinable())
@@ -131,7 +134,44 @@ int main ()
         cout << endl << endl;
         */
     }
-    system("gnuplot command.txt ");
+    /*
+    for(vector<Node>::iterator it = network.begin(); it != network.end(); ++it)
+    {
+        cout << "Triangle #" << it->Getname() << " my Path ==> ";
+        for(multimap<int, double>::const_iterator mit = it->GetmyPath().cbegin(); mit != it->GetmyPath().cend(); ++mit)
+        {
+            cout << "Triangle #" << (*mit).first << " -> " << (*mit).second << ", ";
+        }
+        cout << endl << endl;
+    }*/
+    cout << "Do you want to generate the graph or use Dijkastra Algorithm to calculate the path"<< endl;
+    cout << "1) Generate the graph" << endl;
+    cout << "2) Use Dijkastra Algorithm" << endl;
+    cout << "Your choice: ";
+    cin >> numberOfTriangles;
+    if(numberOfTriangles == 1)
+    {
+        system("gnuplot command.txt ");
+    }
+    else if (numberOfTriangles == 2)
+    {
+        it = mountain.begin();
+        unsigned startingNode;
+        cout << "Please choose one triangle within range [0 - " << mountain.size() -1 << "] ";
+        cin >> startingNode;
+        if(startingNode<0 || startingNode > mountain.size() -1)
+        {
+            cout << "Sorry! The triangle is not within the range." << endl;
+            return 0;
+        }
+        std::advance(it, startingNode);
+        cout << "Starting position: " << startingNode << endl;
+        vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(network, startingNode);
+        for(vector<pair<int,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
+        {
+            cout << "To-> " << it->first << ", Cost-> " << it->second << endl;
+        }
+    }
     return 0;
 }
 /*
