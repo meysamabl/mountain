@@ -70,6 +70,8 @@ class Triangle
 
         Point getCentroid() const { return centroid; }
 
+        const vector<double>& getCrossProductResult() const { return crossProductResult; }
+
     protected:
     private:
         int id;
@@ -85,6 +87,8 @@ class Triangle
         Edge& getLongestSide();
         Point findCentroid();
         vector<double> calculateCrossProduct();
+        double calculateDotProduct(vector<double> vector1, vector<double> vector2);
+        const vector<double> getNormalizedCrossProduct();
         double calculateAspectRatio();
         double calculateDistance(const Point& point1, const Point& point0);
         vector<double> getDelta(const Point& pointDiff, const Point& pointCommon);

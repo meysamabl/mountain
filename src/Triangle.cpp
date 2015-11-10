@@ -221,7 +221,9 @@ double Triangle::calculateAspectRatio()
     Edge longestSide = getLongestSide();
     Edge shortestSide = getShortestSide();
     pair<Point, Point> lPairs, sPairs;
-
+    /// any of the sides share point with the longest side
+    /// we choose arbitrary shortest side and then find the common point between them
+    /// here we are finding the common point for calculating the dotProduct
     if(longestSide.getPoints().at(0) == shortestSide.getPoints().at(0)) {
         lPairs = make_pair(longestSide.getPoints().at(0), longestSide.getPoints().at(1));
         sPairs = make_pair(shortestSide.getPoints().at(0), shortestSide.getPoints().at(1));
@@ -245,6 +247,25 @@ double Triangle::calculateAspectRatio()
     return (height/longestSide.getSideLength());
 }
 
+double Triangle::calculateDotProduct(vector<double> vector1, vector<double> vector2)
+{
+    return (vector1.at(0)*vector2.at(0)) + (vector1.at(1)*vector2.at(1)) + (vector1.at(2)*vector2.at(2));
+}
+
+const vector<double> Triangle::getNormalizedCrossProduct()
+{
+    vector<double> vector1;
+    const vector<double> xprod = getCrossProductResult();
+    double l = sqrt(pow(xprod.at(0), 2.0)
+                    + pow(xprod.at(1), 2.0)
+                    + pow(xprod.at(2), 2.0));
+    vector1.push_back(xprod.at(0)/l);
+    vector1.push_back(xprod.at(1)/l);
+    vector1.push_back(xprod.at(2)/l);
+    return vector1;
+
+}
+
 vector<double> Triangle::getDelta(const Point& pointDiff, const Point& pointCommon)
 {
     vector<double> deltas;
@@ -259,11 +280,12 @@ vector<double> Triangle::getDelta(const Point& pointDiff, const Point& pointComm
 
 bool Triangle::isTraversable()
 {
-    vector<double> vectors = crossProductResult;
-    double l = sqrt(pow(vectors.at(0), 2.0) + pow(vectors.at(1), 2.0) + pow(vectors.at(2), 2.0));
+    //vector<double> vectors = crossProductResult;
+    //double l = sqrt(pow(vectors.at(0), 2.0) + pow(vectors.at(1), 2.0) + pow(vectors.at(2), 2.0));
     //cout << "Unit L-> " << l << endl;
     //cout << "Value to decide : " << vectors.at(2)/l << endl;
-    return abs(vectors.at(2)/l) > COSINE_45;
+    //return abs(vectors.at(2)/l) > COSINE_45;
+    return abs(getNormalizedCrossProduct().at(2)) >= COSINE_45;
 }
 
 Triangle::~Triangle()
