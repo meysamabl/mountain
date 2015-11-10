@@ -78,6 +78,7 @@ int main ()
     unsigned numberOfTriangles;
     list<Triangle> mountain;
     fstream fout("test_output.dat", ios::out);
+    fstream fout2("dijkastra_output.dat", ios::out);
     gen.seed(time(NULL));
     cout << "Please enter initial location(x0,y0,z0) within the range [0,100]: ";
     cin >> x0;
@@ -157,7 +158,8 @@ int main ()
     {
         it = mountain.begin();
         unsigned startingNode;
-        cout << "Please choose one triangle within range [0 - " << mountain.size() -1 << "] ";
+        cout << "Where do you want our parachute guy to land?" << endl;
+        cout << "Please choose a triangle within the range [0 - " << mountain.size() -1 << "] ";
         cin >> startingNode;
         if(startingNode<0 || startingNode > mountain.size() -1)
         {
@@ -166,11 +168,18 @@ int main ()
         }
         std::advance(it, startingNode);
         cout << "Starting Triangle #" << it->getId() << endl;
+        fout2 << "Starting Triangle #" << it->getId() << endl;
+        if(!it->isTraversable())
+        {
+            cout << "oops! too bad, our parachute guy is dead. Sorry!! Game Over." << endl;
+            return 0;
+        }
         vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(network, it->getId());
         for(vector<pair<int,double>>::iterator it = sol.begin(); it != sol.end(); ++it)
         {
-            cout << "To-> " << it->first << ", Cost-> " << it->second << endl;
+            fout2 << "To Triangle #" << it->first << ", Cost-> " << it->second << endl;
         }
+        system("notepad.exe dijkastra_output.dat");
     }
     return 0;
 }

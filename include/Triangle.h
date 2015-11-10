@@ -78,6 +78,7 @@ class Triangle
         vector<Edge> edges;
         vector<Point> vertices;
         Point centroid;
+        vector<double> crossProductResult;
         bool isNeighbor(const Triangle& triangle);
         void addNeighbor(Triangle* neighbor);
         Edge& getShortestSide();

@@ -26,6 +26,7 @@ Triangle::Triangle(vector<Point> verticesVals) : vertices(verticesVals)
     eptr = nullptr;
     refinable = calculateAspectRatio() > 0.01;
     centroid = findCentroid();
+    crossProductResult = calculateCrossProduct();
 }
 
 bool Triangle::isNeighbor(const Triangle& triangle)
@@ -196,6 +197,8 @@ double Triangle::calculateDistance(const Point& point1, const Point& point0)
 vector<double> Triangle::calculateCrossProduct()
 {
     double a,b,c,d,e,f,i,j,k;
+    ///Any arbitrary vector should work,
+    /// then we choose two arbitrary edges
     vector<double> v0 = edges.at(0).getDeltas();
     a = v0.at(0); b = v0.at(1); c = v0.at(2);
     //cout <<"vector 0 " << a << ", " << b << ", " << c << endl;
@@ -256,7 +259,7 @@ vector<double> Triangle::getDelta(const Point& pointDiff, const Point& pointComm
 
 bool Triangle::isTraversable()
 {
-    vector<double> vectors = calculateCrossProduct();
+    vector<double> vectors = crossProductResult;
     double l = sqrt(pow(vectors.at(0), 2.0) + pow(vectors.at(1), 2.0) + pow(vectors.at(2), 2.0));
     //cout << "Unit L-> " << l << endl;
     //cout << "Value to decide : " << vectors.at(2)/l << endl;
