@@ -48,6 +48,8 @@ class Triangle
 
         void updateTargetPointer(Triangle* neighbor, Triangle* updatePointer);
 
+        void updateNeighbors(unsigned index, Triangle* updatePointer);
+
         Node getNodeRepresentation();
 
         Point getDeviatedCentroid();
@@ -58,15 +60,15 @@ class Triangle
 
         void setId(int val) { id = val; }
 
-        vector<Triangle*>& getNeighbors()  { return neighbors; }
+        const vector<Triangle*>& getNeighbors() const  { return neighbors; }
 
         void setNeighbors(vector<Triangle*> val) { neighbors = val; }
 
-        vector<Edge>& getEdges()  { return edges; }
+        const vector<Edge>& getEdges() const  { return edges; }
 
         void setEdges(vector<Edge> val) { edges = val; }
 
-        vector<Point> getVertices() { return vertices;}
+        const vector<Point> getVertices() const { return vertices;}
 
         Point getCentroid() const { return centroid; }
 

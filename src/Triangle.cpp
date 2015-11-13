@@ -159,12 +159,17 @@ void Triangle::updateTargetPointer(Triangle* neighbor, Triangle* updatePointer)
     {
         if(neighbor->getNeighbors().at(i)==this)
         {
-             neighbor->getNeighbors().at(i) = updatePointer;
+             neighbor->updateNeighbors(i, updatePointer);
              //cout << neighbor->getId()
              //<< " updating the neghibor pointer: " << neighbor->getNeighbors().at(i)->getId() << endl;
              break;
         }
     }
+}
+
+void Triangle::updateNeighbors(unsigned index, Triangle* updatePointer)
+{
+    neighbors.at(index) = updatePointer;
 }
 
 Node Triangle::getNodeRepresentation()
