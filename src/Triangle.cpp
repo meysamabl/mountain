@@ -82,9 +82,11 @@ Point Triangle::getDeviatedCentroid()
     Point point = getCentroid();
     double alpha = getShortestSide().getSideLength();
     distr.param(uniform_real_distribution<double>(-alpha, alpha).param());
-    alpha = distr(gen)/30;
+    alpha = distr(gen)/20;
     point.setX(point.getX() + alpha);
+    alpha = distr(gen)/20;
     point.setY(point.getY() + alpha);
+    alpha = distr(gen)/20;
     point.setZ(point.getZ() + alpha);
     return point;
 }
