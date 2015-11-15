@@ -171,7 +171,7 @@ int main ()
         fout2 << "Starting Triangle #" << it->getId() << endl;
         if(!it->isTraversable())
         {
-            cout << "oops! too bad, our parachute guy is dead. Sorry!! Game Over." << endl;
+            cout << "oops! too bad, our parachute guy landed on an unstable triangle and died. Sorry!! Game Over." << endl;
             return 0;
         }
         vector<pair<int,double>> sol = DijkastraAlgorithm::findShortestPaths(network, it->getId());
